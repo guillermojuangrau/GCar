@@ -8,43 +8,76 @@
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:layout_height="80dp"
+        android:layout_gravity="top"
+        android:background="#222222"
+        android:fitsSystemWindows="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="0dp"
+        android:weightSum="100">
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bt_grey" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bt_grey" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bt_grey" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bt_grey" />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bt_grey" />
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
 
-        </LinearLayout>
+    </LinearLayout>
+
+
+
     </FrameLayout>
-
-</FrameLayout>
