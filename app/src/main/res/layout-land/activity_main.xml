@@ -44,7 +44,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_grey" />
+            android:src="@drawable/bt_blue" />
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -55,7 +55,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_grey" />
+            android:src="@drawable/bt_green" />
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -161,6 +161,19 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:src="@drawable/centrebuttongreen_round"
+            android:background="@null"/>
+
+
     </FrameLayout>
 
     </RelativeLayout>
