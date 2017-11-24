@@ -97,6 +97,7 @@
                android:layout_height="0dip"
                android:orientation="horizontal"
                android:layout_weight=".5">
+
                <ImageButton
                    android:layout_width="0dp"
                    android:layout_height="fill_parent"
@@ -106,8 +107,9 @@
                    android:maxHeight="@android:dimen/thumbnail_height"
                    android:paddingHorizontal="0dp"
                    android:paddingVertical="0dp"
-                   android:scaleType="centerCrop"
-                   android:src="@drawable/bt_grey" />
+                   android:scaleType="fitXY"
+                   android:src="@drawable/torque" />
+
                <ImageButton
                    android:layout_width="0dp"
                    android:layout_height="fill_parent"
@@ -117,8 +119,8 @@
                    android:maxHeight="@android:dimen/thumbnail_height"
                    android:paddingHorizontal="0dp"
                    android:paddingVertical="0dp"
-                   android:scaleType="centerCrop"
-                   android:src="@drawable/bt_grey" />
+                   android:scaleType="fitXY"
+                   android:src="@drawable/maps" />
 
            </LinearLayout>
 
@@ -127,6 +129,7 @@
                android:layout_height="0dip"
                android:orientation="horizontal"
                android:layout_weight=".5">
+
                <ImageButton
                    android:layout_width="0dp"
                    android:layout_height="fill_parent"
@@ -136,8 +139,9 @@
                    android:maxHeight="@android:dimen/thumbnail_height"
                    android:paddingHorizontal="0dp"
                    android:paddingVertical="0dp"
-                   android:scaleType="centerCrop"
-                   android:src="@drawable/bt_grey" />
+                   android:scaleType="fitXY"
+                   android:src="@drawable/music" />
+
                <ImageButton
                    android:layout_width="0dp"
                    android:layout_height="fill_parent"
@@ -147,8 +151,8 @@
                    android:maxHeight="@android:dimen/thumbnail_height"
                    android:paddingHorizontal="0dp"
                    android:paddingVertical="0dp"
-                   android:scaleType="centerCrop"
-                   android:src="@drawable/bt_grey" />
+                   android:scaleType="fitXY"
+                   android:src="@drawable/home" />
 
            </LinearLayout>
 
