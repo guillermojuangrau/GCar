@@ -111,7 +111,7 @@
                     android:maxHeight="@android:dimen/thumbnail_height"
                     android:paddingHorizontal="0dp"
                     android:paddingVertical="0dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="matrix"
                     android:src="@drawable/torque" />
 
                 <ImageButton
@@ -124,7 +124,7 @@
                     android:paddingHorizontal="0dp"
                     android:paddingVertical="0dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/maps" />
+                    android:src="@drawable/worldmap" />
 
             </LinearLayout>
 
@@ -143,8 +143,8 @@
                     android:maxHeight="@android:dimen/thumbnail_height"
                     android:paddingHorizontal="0dp"
                     android:paddingVertical="0dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/music" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/microphone" />
 
                 <ImageButton
                     android:layout_width="0dp"
