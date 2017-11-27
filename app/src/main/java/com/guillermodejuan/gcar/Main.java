@@ -112,7 +112,7 @@ public class Main extends AppCompatActivity {
 
     private void updateBluetooth(){
         if(mBluetoothAdapter.isEnabled()){
-            bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_green));
+            bluetoothButton.setImageDrawable(getDrawable(R.drawable.btgreen));
             btenabled = true;
         }else{
             bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_grey));
@@ -191,6 +191,9 @@ public class Main extends AppCompatActivity {
         return;
     }
 
+    private void showSettingsPopup(){
+        //TODO
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -212,10 +215,14 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                         bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_grey));
                         mBluetoothAdapter.disable();
 
+
+
                     }else{
                         btenabled = true;
-                        bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_green));
+                        bluetoothButton.setImageDrawable(getDrawable(R.drawable.btgreen));
                         mBluetoothAdapter.enable();
+
+
 
                     }
                     break;
@@ -242,8 +249,7 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     break;
                 case R.id.settings:
 
-                    Toast.makeText(Main.this,
-                "settings is clicked!", Toast.LENGTH_SHORT).show();
+                    showSettingsPopup();
                     break;
                 case R.id.reboot:
 
