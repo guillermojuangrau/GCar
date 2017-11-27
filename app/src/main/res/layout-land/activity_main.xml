@@ -24,6 +24,7 @@
         android:weightSum="100">
 
         <ImageButton
+            android:id="@+id/bluetooth"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -35,6 +36,7 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/bt_grey" />
         <ImageButton
+            android:id="@+id/gps"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -46,6 +48,7 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/gps_grey" />
         <ImageButton
+            android:id="@+id/data"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -57,6 +60,7 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/data_grey" />
         <ImageButton
+            android:id="@+id/volume"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -69,6 +73,7 @@
             android:src="@mipmap/volume_grey" />
 
         <ImageButton
+            android:id="@+id/callana"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="15"
@@ -81,6 +86,7 @@
         android:src="@mipmap/callana_grey" />
 
         <ImageButton
+            android:id="@+id/settings"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -93,6 +99,7 @@
             android:src="@mipmap/settings_grey" />
 
         <ImageButton
+            android:id="@+id/reboot"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -128,6 +135,7 @@
                 android:layout_weight=".5">
 
                 <ImageButton
+                    android:id="@+id/torque"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="20"
@@ -140,6 +148,7 @@
                     android:src="@drawable/torque" />
 
                 <ImageButton
+                    android:id="@+id/maps"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="20"
@@ -160,6 +169,7 @@
                 android:layout_weight=".5">
 
                 <ImageButton
+                    android:id="@+id/music"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="20"
@@ -172,6 +182,7 @@
                     android:src="@drawable/microphone" />
 
                 <ImageButton
+                    android:id="@+id/homebutton"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="20"
@@ -188,6 +199,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/gbutton"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:adjustViewBounds="true"
