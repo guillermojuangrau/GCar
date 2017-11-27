@@ -1,24 +1,16 @@
 package com.guillermodejuan.gcar;
 
-import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
