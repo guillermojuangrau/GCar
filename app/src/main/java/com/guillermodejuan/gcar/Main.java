@@ -1,12 +1,14 @@
 package com.guillermodejuan.gcar;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.location.LocationManager;
+import android.media.AudioManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -51,7 +53,16 @@ public class Main extends AppCompatActivity {
     ImageButton homeButton;
     ImageButton gButton;
     boolean gbuttonState = true;
+    boolean btenabled;
+    boolean gpsenabled;
+    boolean dataenabled;
+    int volume;
+    int maxvolume;
+
+
     BluetoothAdapter mBluetoothAdapter;
+    TelephonyManager telephonyManager;
+    AudioManager audioManager;
 
 
     @Override
@@ -79,13 +90,73 @@ public class Main extends AppCompatActivity {
 
     }
 
+    private void isGPSEnabled(){
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            gpsenabled = false;
+        }
+        else{
+            gpsenabled=true;
+        }
+    }
+
+    private void updateGPS(){
+        isGPSEnabled();
+        if(gpsenabled){
+            gpsButton.setImageDrawable(getDrawable(R.drawable.gps_green));
+        }else{
+            gpsButton.setImageDrawable(getDrawable(R.drawable.gps_grey));
+        }
+    }
+
+    private void updateBluetooth(){
+        if(mBluetoothAdapter.isEnabled()){
+            bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_green));
+            btenabled = true;
+        }else{
+            bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_grey));
+            btenabled=false;
+        }
+    }
+
+    private void updateData(){
+        if(telephonyManager.getDataState()==TelephonyManager.DATA_CONNECTED){
+            dataButton.setImageDrawable(getDrawable(R.drawable.data_green));
+            dataenabled = true;
+        }else{
+            dataButton.setImageDrawable(getDrawable(R.drawable.data_grey));
+            dataenabled=false;
+        }
+    }
+
+    private void updateVolume(){
+        volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        maxvolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        if(volume == 0){
+            volumeButton.setImageDrawable(getDrawable(R.drawable.mute_grey));
+        }else{
+            if(volume==maxvolume){
+                volumeButton.setImageDrawable(getDrawable(R.drawable.volume_green));
+            }else{
+                volumeButton.setImageDrawable(getDrawable(R.drawable.volume_grey));
+            }
+        }
+    }
     //Method to set up all the adapters to the phone's functionality
     private void setUpAdapters(){
-        //TODO
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        telephonyManager =(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         return;
     }
     //Method to set the initial button states
     private void setButtonStates(){
+        updateBluetooth();
+        updateGPS();
+        updateData();
+        updateVolume();
         //TODO
         return;
     }
@@ -136,9 +207,17 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
             switch (v.getId() /*to get clicked view id**/) {
                 case R.id.bluetooth:
 
-                     Toast.makeText(Main.this,
-                "bluetooth is clicked!", Toast.LENGTH_SHORT).show();
+                    if(btenabled){
+                        btenabled = false;
+                        bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_grey));
+                        mBluetoothAdapter.disable();
 
+                    }else{
+                        btenabled = true;
+                        bluetoothButton.setImageDrawable(getDrawable(R.drawable.bt_green));
+                        mBluetoothAdapter.enable();
+
+                    }
                     break;
                 case R.id.gps:
 

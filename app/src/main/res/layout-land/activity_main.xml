@@ -34,7 +34,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/bt_grey" />
+            android:src="@drawable/bt_grey" />
         <ImageButton
             android:id="@+id/gps"
             android:layout_width="0dp"
@@ -46,7 +46,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/gps_grey" />
+            android:src="@drawable/gps_grey" />
         <ImageButton
             android:id="@+id/data"
             android:layout_width="0dp"
@@ -58,7 +58,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/data_grey" />
+            android:src="@drawable/data_grey" />
         <ImageButton
             android:id="@+id/volume"
             android:layout_width="0dp"
@@ -70,7 +70,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/volume_grey" />
+            android:src="@drawable/volume_grey" />
 
         <ImageButton
             android:id="@+id/callana"
@@ -83,7 +83,7 @@
         android:paddingHorizontal="0dp"
         android:paddingVertical="0dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/callana_grey" />
+        android:src="@drawable/callana_grey" />
 
         <ImageButton
             android:id="@+id/settings"
@@ -96,7 +96,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/settings_grey" />
+            android:src="@drawable/settings_grey" />
 
         <ImageButton
             android:id="@+id/reboot"
@@ -109,7 +109,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/reboot_grey" />
+            android:src="@drawable/reboot_grey" />
 
 
 
