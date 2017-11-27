@@ -31,7 +31,8 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_grey" />
+            android:src="@mipmap/bt_grey" />
+
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -42,7 +43,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_blue" />
+            android:src="@mipmap/gps_grey" />
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -53,7 +54,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_green" />
+            android:src="@mipmap/data_grey" />
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -64,7 +65,32 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_grey" />
+            android:src="@mipmap/volume_grey" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/callana_grey" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0"
+            android:adjustViewBounds="true"
+            android:background="#222222"
+            android:maxHeight="@android:dimen/thumbnail_height"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/reboot_grey" />
+
         <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -75,7 +101,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/bt_grey" />
+            android:src="@mipmap/settings_grey" />
 
 
 
