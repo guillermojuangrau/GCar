@@ -8,9 +8,6 @@ Central icon:
 	Green:
 		Background: centrebuttongreenoriginal.jpg at 68%
 		Foreground: logo-1.jpg at 30%
-BT icon:
-
-Mobile data icon:
-
-GPS icon:
-
+Toolbar icons:
+    Background: foldergrey/foldergreen at 68%
+    Foreground:  clipart at 70%
