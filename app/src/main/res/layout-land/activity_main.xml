@@ -99,7 +99,7 @@
             android:src="@drawable/settings_grey" />
 
         <ImageButton
-            android:id="@+id/reboot"
+            android:id="@+id/rotation"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="15"
@@ -109,7 +109,7 @@
             android:paddingHorizontal="0dp"
             android:paddingVertical="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/reboot_grey" />
+            android:src="@drawable/rotation_grey" />
 
 
 

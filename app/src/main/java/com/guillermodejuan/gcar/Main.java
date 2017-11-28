@@ -4,16 +4,17 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -27,7 +28,7 @@ public class Main extends AppCompatActivity {
     ImageButton volumeButton;
     ImageButton settingsButton;
     ImageButton callanaButton;
-    ImageButton rebootButton;
+    ImageButton rotationButton;
     ImageButton torqueButton;
     ImageButton musicButton;
     ImageButton mapsButton;
@@ -39,10 +40,10 @@ public class Main extends AppCompatActivity {
     boolean dataenabled;
     int volume;
     int maxvolume;
+    boolean autorotation;
     String navigationaddress = "Default address";
     Context context;
-    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_SETTINGS = 1;
 
     BluetoothAdapter mBluetoothAdapter;
     TelephonyManager telephonyManager;
@@ -79,6 +80,16 @@ public class Main extends AppCompatActivity {
         }
     }
 
+    private void updateAutoRotation(){
+        if (android.provider.Settings.System.getInt(getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION, 0) == 1){
+            autorotation=true;
+            rotationButton.setImageDrawable(getDrawable(R.drawable.rotation_green));
+        }else{
+            autorotation=false;
+            rotationButton.setImageDrawable(getDrawable(R.drawable.rotation_green));
+        }
+    }
     private void updateGPS(){
         isGPSEnabled();
         if(gpsenabled){
@@ -146,6 +157,7 @@ public class Main extends AppCompatActivity {
         updateData();
         updateVolume();
         updateCallAnaButton();
+        updateAutoRotation();
         //TODO
         return;
     }
@@ -156,7 +168,7 @@ public class Main extends AppCompatActivity {
         volumeButton.setOnClickListener(buttonListener);
         settingsButton.setOnClickListener(buttonListener);
         callanaButton.setOnClickListener(buttonListener);
-        rebootButton.setOnClickListener(buttonListener);
+        rotationButton.setOnClickListener(buttonListener);
         torqueButton.setOnClickListener(buttonListener);
         musicButton.setOnClickListener(buttonListener);
         mapsButton.setOnClickListener(buttonListener);
@@ -171,7 +183,7 @@ public class Main extends AppCompatActivity {
         volumeButton    =   findViewById(R.id.volume);
         settingsButton  =   findViewById(R.id.settings);
         callanaButton   =   findViewById(R.id.callana);
-        rebootButton    =   findViewById(R.id.reboot);
+        rotationButton =   findViewById(R.id.rotation);
         torqueButton    =   findViewById(R.id.torque);
         musicButton     =   findViewById(R.id.music);
         mapsButton      =   findViewById(R.id.maps);
@@ -186,7 +198,32 @@ public class Main extends AppCompatActivity {
         startActivityForResult(i,1);
     }
 
+    private void launchCarDialsApp() {
+        Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("org.prowl.torquefree");
+        startActivity( LaunchIntent );
+    }
 
+    private void toggleVolumeLevels() {
+        volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        maxvolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        if(maxvolume-volume==0){
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 2);
+        }else{
+            if(volume==0){
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxvolume, 2);
+            }else{
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxvolume, 2);
+            }
+        }
+        updateVolume();
+    }
+
+
+    public static void setAutoOrientationEnabled(Context context, boolean enabled)
+    {
+        Settings.System.putInt( context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, enabled ? 1 : 0);
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -228,16 +265,22 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
 
 
                     }
+                    setButtonStates();
                     break;
                 case R.id.gps:
-
+                    Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(gpsOptionsIntent);
+                    setButtonStates();
                     break;
                 case R.id.data:
+                    Intent i = new Intent(android.provider.Settings.ACTION_SETTINGS);
+                    startActivity(i);
+                    setButtonStates();
                     break;
                 case R.id.volume:
 
-                    Toast.makeText(Main.this,
-                "volume is clicked!", Toast.LENGTH_SHORT).show();
+                    toggleVolumeLevels();
+
                     break;
                 case R.id.callana:
                     Intent intent = new Intent();
@@ -256,32 +299,37 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                 case R.id.settings:
 
                     showSettingsPopup();
+                    setButtonStates();
                     break;
-                case R.id.reboot:
+                case R.id.rotation:
 
-                    Toast.makeText(Main.this,
-                            "reboot is clicked!", Toast.LENGTH_SHORT).show();
+                    checkPermissionsForRotation();
+                    if (autorotation){
+                        setAutoOrientationEnabled(context, false);
+                    }else{
+                        setAutoOrientationEnabled(context, true);
+                    }
+                    setButtonStates();
+
                     break;
                 case R.id.torque:
-                    Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("org.prowl.torquefree");
-                    startActivity( LaunchIntent );
+                    launchCarDialsApp();
+                    setButtonStates();
                     break;
                 case R.id.maps:
 
-                     Toast.makeText(Main.this,
-                "maps is clicked!", Toast.LENGTH_SHORT).show();
+
+                    setButtonStates();
                     break;
 
                 case R.id.music:
 
-                    Toast.makeText(Main.this,
-                "music is clicked!", Toast.LENGTH_SHORT).show();
+                    setButtonStates();
                     break;
 
                 case R.id.homebutton:
 
-                     Toast.makeText(Main.this,
-                "home is clicked!", Toast.LENGTH_SHORT).show();
+                    setButtonStates();
 
                     break;
 
@@ -293,7 +341,7 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                         gButton.setImageResource(R.drawable.centrebuttongreen_round);
                         gbuttonState=true;
                     }
-
+                    setButtonStates();
 
                     break;
                 default:
@@ -302,5 +350,27 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
         }
     };
 
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_SETTINGS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+
+                } else {
+
+
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
 }
