@@ -1,5 +1,6 @@
 package com.guillermodejuan.gcar;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -10,11 +11,14 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -41,7 +45,7 @@ public class Main extends AppCompatActivity {
     int volume;
     int maxvolume;
     boolean autorotation;
-    String navigationaddress = "Default address";
+    String navigationaddress = "10 Devonshire Street, Cheltenham, UK";
     Context context;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_SETTINGS = 1;
 
@@ -246,6 +250,8 @@ public class Main extends AppCompatActivity {
 
 private View.OnClickListener buttonListener = new View.OnClickListener() {
         public void onClick(View v) {
+            Uri gmmIntentUri;
+            Intent mapIntent;
 
             switch (v.getId() /*to get clicked view id**/) {
                 case R.id.bluetooth:
@@ -302,14 +308,20 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     setButtonStates();
                     break;
                 case R.id.rotation:
-
-                    checkPermissionsForRotation();
-                    if (autorotation){
-                        setAutoOrientationEnabled(context, false);
+                    if (checkSelfPermission(Manifest.permission.WRITE_SETTINGS)
+                            == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(Main.this,
+                                new String[]{Manifest.permission.WRITE_SETTINGS},
+                                MY_PERMISSIONS_REQUEST_WRITE_SETTINGS);
                     }else{
-                        setAutoOrientationEnabled(context, true);
+                        if (autorotation){
+                            setAutoOrientationEnabled(context, false);
+                        }else{
+                            setAutoOrientationEnabled(context, true);
+                        }
+                        setButtonStates();
                     }
-                    setButtonStates();
+
 
                     break;
                 case R.id.torque:
@@ -318,6 +330,10 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     break;
                 case R.id.maps:
 
+                    gmmIntentUri = Uri.parse("geo:37.7749,-122.4192?q=" + Uri.encode(navigationaddress));
+                    mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
 
                     setButtonStates();
                     break;
@@ -328,7 +344,10 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     break;
 
                 case R.id.homebutton:
-
+                    gmmIntentUri = Uri.parse("google.navigation:q=10,+Devonshire+Street,+Cheltenham,+United+Kingdom");
+                    mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
                     setButtonStates();
 
                     break;
@@ -351,6 +370,8 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
     };
 
 
+
+
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -358,11 +379,18 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (autorotation){
+                        setAutoOrientationEnabled(context, false);
+                    }else{
+                        setAutoOrientationEnabled(context, true);
+                    }
 
+                    setButtonStates();
 
 
                 } else {
-
+                    Toast.makeText(Main.this,
+                            "Permission not granted to change screen rotation!", Toast.LENGTH_SHORT).show();
 
                 }
                 return;
