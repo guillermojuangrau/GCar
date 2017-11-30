@@ -6,10 +6,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.LocationManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
@@ -19,6 +22,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.speech.tts.TextToSpeech;
+
+import java.util.Locale;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -45,13 +52,18 @@ public class Main extends AppCompatActivity {
     int volume;
     int maxvolume;
     boolean autorotation;
-    String navigationaddress = "10 Devonshire Street, Cheltenham, UK";
+    boolean TTSactive = false;
+    String navigationaddress = "51°57'25.3 N 3°35'17.5 W";
+    String playlist;
     Context context;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_SETTINGS = 1;
+    private static final int MY_DATA_CHECK_CODE = 2;
 
     BluetoothAdapter mBluetoothAdapter;
     TelephonyManager telephonyManager;
     AudioManager audioManager;
+    TextToSpeech repeatTTS;
+
 
 
     @Override
@@ -70,8 +82,19 @@ public class Main extends AppCompatActivity {
         addButtonListeners();
         setUpAdapters();
         setButtonStates();
+        setupTTS();
 
     }
+
+    private void setupTTS(){
+        //prepare the TTS to repeat chosen words
+        Intent checkTTSIntent = new Intent();
+//check TTS data
+        checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//start the checking Intent - will retrieve result in onActivityResult
+        startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
+    }
+
 
     private void isGPSEnabled(){
         final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
@@ -238,7 +261,7 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_SETTINGS) {
             if(resultCode == Activity.RESULT_OK){
                 navigationaddress = data.getStringExtra("result");
             }
@@ -246,7 +269,36 @@ public class Main extends AppCompatActivity {
                 //Write your code if there's no result
             }
         }
+        if (requestCode == MY_DATA_CHECK_CODE)
+        {
+            //we have the data - create a TTS instance
+            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
+                repeatTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status != TextToSpeech.ERROR) {
+                            //TTS configuration
+                            repeatTTS.setLanguage(Locale.UK);
+                            Toast.makeText(Main.this,
+                                    "TTS Setup correctly", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    }
+                });
+
+                //data not installed, prompt the user to install it
+            else
+            {
+                //intent will take user to TTS download page in Google Play
+                Intent installTTSIntent = new Intent();
+                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(installTTSIntent);
+            }
+        }
     }
+
+
 
 private View.OnClickListener buttonListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -330,7 +382,7 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     break;
                 case R.id.maps:
 
-                    gmmIntentUri = Uri.parse("geo:37.7749,-122.4192?q=" + Uri.encode(navigationaddress));
+                    gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(navigationaddress));
                     mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     startActivity(mapIntent);
@@ -339,7 +391,8 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     break;
 
                 case R.id.music:
-
+                    Toast.makeText(Main.this,
+                            "Functionality not yet implemented.", Toast.LENGTH_SHORT).show();
                     setButtonStates();
                     break;
 
@@ -400,5 +453,6 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
             // permissions this app might request
         }
     }
+
 
 }
