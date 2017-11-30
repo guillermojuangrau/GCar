@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.LocationManager;
 import android.media.AudioManager;
@@ -63,6 +64,7 @@ public class Main extends AppCompatActivity {
     TelephonyManager telephonyManager;
     AudioManager audioManager;
     TextToSpeech repeatTTS;
+    Resources res;
 
 
 
@@ -77,21 +79,33 @@ public class Main extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         context = this.getApplicationContext();
+        res = getResources();
 
         linkButtonsWithTheirViews();
         addButtonListeners();
         setUpAdapters();
         setButtonStates();
         setupTTS();
+        speak(R.string.welcome_message);
 
+    }
+
+    private void speak(int idOfStringToSpeak){
+        String stringToSpeak = res.getString(idOfStringToSpeak);
+        repeatTTS.speak(stringToSpeak, TextToSpeech.QUEUE_ADD, null, stringToSpeak);
+    }
+
+    private void speak(String stringToSpeak){
+
+        repeatTTS.speak(stringToSpeak, TextToSpeech.QUEUE_ADD, null, stringToSpeak);
     }
 
     private void setupTTS(){
         //prepare the TTS to repeat chosen words
         Intent checkTTSIntent = new Intent();
-//check TTS data
+        //check TTS data
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-//start the checking Intent - will retrieve result in onActivityResult
+        //start the checking Intent - will retrieve result in onActivityResult
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
     }
 
@@ -279,8 +293,7 @@ public class Main extends AppCompatActivity {
                         if(status != TextToSpeech.ERROR) {
                             //TTS configuration
                             repeatTTS.setLanguage(Locale.UK);
-                            Toast.makeText(Main.this,
-                                    "TTS Setup correctly", Toast.LENGTH_SHORT).show();
+                            TTSactive = true;
 
 
                         }
@@ -377,11 +390,12 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
 
                     break;
                 case R.id.torque:
+                    speak(R.string.starting_torque);
                     launchCarDialsApp();
                     setButtonStates();
                     break;
                 case R.id.maps:
-
+                    speak(R.string.starting_torque);
                     gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(navigationaddress));
                     mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
@@ -391,12 +405,14 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     break;
 
                 case R.id.music:
+                    speak(R.string.starting_music);
                     Toast.makeText(Main.this,
                             "Functionality not yet implemented.", Toast.LENGTH_SHORT).show();
                     setButtonStates();
                     break;
 
                 case R.id.homebutton:
+                    speak(R.string.starting_home);
                     gmmIntentUri = Uri.parse("google.navigation:q=10,+Devonshire+Street,+Cheltenham,+United+Kingdom");
                     mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
