@@ -405,7 +405,7 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     setButtonStates();
                     break;
                 case R.id.maps:
-                    speak(R.string.starting_torque);
+                    speak(R.string.starting_navigation);
                     gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(navigationaddress));
                     mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
@@ -440,6 +440,7 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                         gButton.setImageResource(R.drawable.centrebuttonred_round);
                         gbuttonState=false;
                         speak(R.string.gbutton_deactivated);
+
                     }else{
                         gButton.setImageResource(R.drawable.centrebuttongreen_round);
                         gbuttonState=true;

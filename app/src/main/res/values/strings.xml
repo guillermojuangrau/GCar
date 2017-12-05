@@ -20,10 +20,10 @@
     <string name="accept_settings">Accept</string>
     <string name="navigation_address">Navigation address</string>
     <string name="welcome_message">GCar online</string>
-    <string name="starting_torque">Navigation address</string>
-    <string name="starting_navigation">Navigation address</string>
-    <string name="starting_home">Navigation address</string>
+    <string name="starting_torque">Link to car is online. ODB Bridge has been established and is online. Accessing and displaying data.</string>
+    <string name="starting_navigation">Mobile data is online. GPS is online. Navigation access request has been granted. Accessing navigation interface and taking you to selected address.</string>
+    <string name="starting_home">Mobile data is online. GPS is online. Home address has been set. Accessing navigation interface and taking you home.</string>
     <string name="starting_music">Navigation address</string>
-    <string name="gbutton_activated">Central button has been activated, linking app to car, starting gauges</string>
+    <string name="gbutton_activated">Central button has been activated</string>
     <string name="gbutton_deactivated">Central button has been deactivated</string>
 </resources>
