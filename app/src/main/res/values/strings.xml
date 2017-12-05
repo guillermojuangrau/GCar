@@ -19,11 +19,11 @@
     </string>
     <string name="accept_settings">Accept</string>
     <string name="navigation_address">Navigation address</string>
-    <string name="welcome_message">Navigation address</string>
+    <string name="welcome_message">GCar online</string>
     <string name="starting_torque">Navigation address</string>
     <string name="starting_navigation">Navigation address</string>
     <string name="starting_home">Navigation address</string>
     <string name="starting_music">Navigation address</string>
-    <string name="gbutton_activated">Navigation address</string>
-    <string name="gbutton_deactivated">Navigation address</string>
+    <string name="gbutton_activated">Central button has been activated, linking app to car, starting gauges</string>
+    <string name="gbutton_deactivated">Central button has been deactivated</string>
 </resources>

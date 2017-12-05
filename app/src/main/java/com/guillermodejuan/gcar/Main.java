@@ -59,6 +59,7 @@ public class Main extends AppCompatActivity {
     Context context;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_SETTINGS = 1;
     private static final int MY_DATA_CHECK_CODE = 2;
+    private static final String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
     TelephonyManager telephonyManager;
@@ -86,13 +87,22 @@ public class Main extends AppCompatActivity {
         setUpAdapters();
         setButtonStates();
         setupTTS();
-        speak(R.string.welcome_message);
+
+
 
     }
 
     private void speak(int idOfStringToSpeak){
-        String stringToSpeak = res.getString(idOfStringToSpeak);
-        repeatTTS.speak(stringToSpeak, TextToSpeech.QUEUE_ADD, null, stringToSpeak);
+        if(TTSactive){
+            String stringToSpeak = res.getString(idOfStringToSpeak);
+            repeatTTS.speak(stringToSpeak, TextToSpeech.QUEUE_ADD, null, stringToSpeak);
+        }else{
+            Toast.makeText(Main.this,
+                    idOfStringToSpeak, Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(Main.this,
+                    "TTS inactive", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void speak(String stringToSpeak){
@@ -294,7 +304,7 @@ public class Main extends AppCompatActivity {
                             //TTS configuration
                             repeatTTS.setLanguage(Locale.UK);
                             TTSactive = true;
-
+                            speak(R.string.welcome_message);
 
                         }
                     }
@@ -406,8 +416,12 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
 
                 case R.id.music:
                     speak(R.string.starting_music);
-                    Toast.makeText(Main.this,
-                            "Functionality not yet implemented.", Toast.LENGTH_SHORT).show();
+                    try {
+                        Intent music_intent = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_MUSIC);
+                        startActivity(music_intent);
+                    } catch (Exception e) {
+                        Log.d(TAG, "Exception for launching music player "+e);
+                    }
                     setButtonStates();
                     break;
 
@@ -425,9 +439,11 @@ private View.OnClickListener buttonListener = new View.OnClickListener() {
                     if(gbuttonState){
                         gButton.setImageResource(R.drawable.centrebuttonred_round);
                         gbuttonState=false;
+                        speak(R.string.gbutton_deactivated);
                     }else{
                         gButton.setImageResource(R.drawable.centrebuttongreen_round);
                         gbuttonState=true;
+                        speak(R.string.gbutton_activated);
                     }
                     setButtonStates();
 
