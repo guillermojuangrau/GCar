@@ -38,7 +38,7 @@ TextView text;
 
     private void recordDataAndGoBack() {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("result", text.getEditableText());
+        returnIntent.putExtra("result", text.getEditableText().toString());
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
 

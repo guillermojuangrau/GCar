@@ -11,3 +11,15 @@ Central icon:
 Toolbar icons:
     Background: foldergrey/foldergreen at 68%
     Foreground:  clipart at 70%
+
+
+Pending things:
+Adding an app selector for Music and Car gauges apps in settings
+Storing and recalling the settings
+Adding functionality to central button
+Making each option run checks before speaking and executing the commands (verifying GPS is online, saying it and then executing navigation, etc...)
+Fix Ana's calling button
+Setting for Ana's calling button
+
+To implement in future versions:
+Selector for whatsapp contacts/opening call menu in whatsapp/adding phone selector/adding contact selector

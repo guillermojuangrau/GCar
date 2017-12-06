@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -59,6 +60,7 @@ public class Main extends AppCompatActivity {
     Context context;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_SETTINGS = 1;
     private static final int MY_DATA_CHECK_CODE = 2;
+    private static final int SETTINGS_ACTIVITY_RETURN_CODE = 3;
     private static final String TAG = "MainActivity";
 
     BluetoothAdapter mBluetoothAdapter;
@@ -66,6 +68,8 @@ public class Main extends AppCompatActivity {
     AudioManager audioManager;
     TextToSpeech repeatTTS;
     Resources res;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
 
 
@@ -87,9 +91,25 @@ public class Main extends AppCompatActivity {
         setUpAdapters();
         setButtonStates();
         setupTTS();
+        loadPreferences();
 
 
 
+
+
+
+    }
+
+    private void loadPreferences() {
+        sharedPref= getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        navigationaddress = sharedPref.getString("navigationaddress", "10, Devonshire Street, Cheltenham, UK");
+    }
+
+    private void savePreferences() {
+        sharedPref= getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        editor.putString(getString(R.string.navigation_address), navigationaddress);
+        editor.commit();
     }
 
     private void speak(int idOfStringToSpeak){
@@ -246,7 +266,7 @@ public class Main extends AppCompatActivity {
     private void showSettingsPopup(){
         Intent i = new Intent(this, SettingsActivity.class);
         i.putExtra("address", navigationaddress);
-        startActivityForResult(i,1);
+        startActivityForResult(i,SETTINGS_ACTIVITY_RETURN_CODE);
     }
 
     private void launchCarDialsApp() {
@@ -285,9 +305,10 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_SETTINGS) {
+        if (requestCode == SETTINGS_ACTIVITY_RETURN_CODE) {
             if(resultCode == Activity.RESULT_OK){
                 navigationaddress = data.getStringExtra("result");
+                savePreferences();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
@@ -323,7 +344,8 @@ public class Main extends AppCompatActivity {
 
 
 
-private View.OnClickListener buttonListener = new View.OnClickListener() {
+
+    private View.OnClickListener buttonListener = new View.OnClickListener() {
         public void onClick(View v) {
             Uri gmmIntentUri;
             Intent mapIntent;
